@@ -78,7 +78,8 @@ if(!subdomain){
     
     
 }
-mkdirp.sync("/etc/ssl/nginx/"+domain);
+if(pubKeyFile || privKeyFile)
+    mkdirp.sync("/etc/ssl/nginx/"+domain);
 if(pubKeyFile)
     fs.renameSync(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem")
 if(privKeyFile)
