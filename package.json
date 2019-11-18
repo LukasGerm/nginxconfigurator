@@ -1,0 +1,25 @@
+{
+  "name": "nginxconfigurator",
+  "version": "0.0.1",
+  "description": "A Package to create nginx confs for docker and cloudflare environments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukasGerm/nginxconfigurator.git"
+  },
+  "keywords": [
+    "generator"
+  ],
+  "author": "Lukas Germerott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LukasGerm/nginxconfigurator/issues"
+  },
+  "homepage": "https://github.com/LukasGerm/nginxconfigurator#readme",
+  "dependencies": {
+    "mkdirp": "^0.5.1"
+  }
+}
