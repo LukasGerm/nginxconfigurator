@@ -1,10 +1,11 @@
 const fs = require('fs');
+const path = require('path');
 var mkdirp = require('mkdirp');
-const domain = process.argv.slice(2);
-const port = process.argv.slice(3);
+const domain = process.argv[2];
+const port = process.argv[3];
 
-const pubKeyFile = process.argv.slice(4);
-const privKeyFile = process.argv.slice(5);
+const pubKeyFile = process.argv[4];
+const privKeyFile = process.argv[5];
 
 fs.writeFile("/etc/nginx/conf.d/"+domain+".conf", `
 upstream `+domain+`{
@@ -58,12 +59,12 @@ mkdirp("/etc/nginx"+domain,err => {
     if (err)console.log("Error creating ssl directory");
 });
 
-fs.rename(pubKeyFile,"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem",err => {
+fs.rename(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem",err => {
     if(err) console.writeLine("Error writing public key");
 
 })
 
-fs.rename(privKeyFile,"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem",err => {
+fs.rename(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem",err => {
     if(err) console.writeLine("Error writing private key");
 
 })
