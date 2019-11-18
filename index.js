@@ -7,7 +7,7 @@ const port = process.argv[3];
 const pubKeyFile = process.argv[4];
 const privKeyFile = process.argv[5];
 
-fs.writeFile("/etc/nginx/conf.d/"+domain+".conf", `
+fs.writeFileSync("/etc/nginx/conf.d/"+domain+".conf", `
 upstream `+domain+`{
     server 127.0.0.1:`+port+`;
 }
@@ -34,11 +34,9 @@ server {
             proxy_set_header x-Forwarded-Proto $scheme;
     }
 
-}`,err => {
-    if(err) console.log("Error writing Domain conf");
-});
+}`);
 
-fs.writeFile("/etc/nginx/cloudflare."+domain+".ssl", `
+fs.writeFileSync("/etc/nginx/cloudflare."+domain+".ssl", `
 ssl_certificate /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_public.pem;
 ssl_certificate_key /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_private.pem;
 ssl_client_certificate /etc/ssl/nginx/origin-pull-ca.pem;
@@ -51,20 +49,10 @@ ssl_ecdh_curve secp384r1;
 ssl_session_cache shared:SSL:10m;
 ssl_session_timeout 10m;
 
-`,err => {
-    if(err) console.log("Error writing ssl conf");
-});
+`);
 
-mkdirp("/etc/ssl/nginx/"+domain,err => {
-    if (err)console.log("Error creating ssl directory");
-});
+mkdirp.sync("/etc/ssl/nginx/"+domain);
 
-fs.rename(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem",err => {
-    if(err) console.log("Error writing public key");
+fs.renameSync(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem")
 
-})
-
-fs.rename(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem",err => {
-    if(err) console.log("Error writing private key");
-
-})
+fs.renameSync(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem")
