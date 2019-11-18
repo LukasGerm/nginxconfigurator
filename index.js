@@ -32,13 +32,18 @@ if(!port){
 if(!domain){
     return console.log("You cant create a config without domain");
 }
-if(domain)
+if(domain){
+    let sdomain = ""
+    if(subdomain){
+        splitDomain = domain.split(".");
+        sdomain = splitDomain[splitDomain.length-1]+splitDomain[splitDomain.length];
+    }
     fs.writeFileSync("/etc/nginx/conf.d/"+domain+".conf", `
     upstream `+domain+`{
         server 127.0.0.1:`+port+`;
     }
     server {
-        include cloudflare.`+domain+`.ssl;
+        include cloudflare.`+ subdomain ? sdomain : domain+`.ssl;
 
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
@@ -60,6 +65,8 @@ if(domain)
         }
 
     }`);
+}
+    
 if(!subdomain){
     fs.writeFileSync("/etc/nginx/cloudflare."+domain+".ssl", `
     ssl_certificate /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_public.pem;
