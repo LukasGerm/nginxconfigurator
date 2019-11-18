@@ -36,14 +36,14 @@ if(domain){
     let sdomain = ""
     if(subdomain){
         splitDomain = domain.split(".");
-        sdomain = splitDomain[splitDomain.length-1]+splitDomain[splitDomain.length];
+        sdomain = splitDomain[splitDomain.length-2]+"."+splitDomain[splitDomain.length-1];
     }
     fs.writeFileSync("/etc/nginx/conf.d/"+domain+".conf", `
     upstream `+domain+`{
         server 127.0.0.1:`+port+`;
     }
     server {
-        include cloudflare.`+ subdomain ? sdomain : domain+`.ssl;
+        include cloudflare.`+ (subdomain ? sdomain : domain)+`.ssl;
 
         listen 443 ssl http2;
         listen [::]:443 ssl http2;
