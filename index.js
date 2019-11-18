@@ -16,7 +16,7 @@ server {
 
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name `+domain+`;                                                            
+    server_name `+domain+`;  
     access_log off;
     expires 24h;
     location / {
@@ -40,7 +40,7 @@ ssl_certificate /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_public.pem;
 ssl_certificate_key /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_private.pem;
 ssl_client_certificate /etc/ssl/nginx/origin-pull-ca.pem;
 ssl_verify_client on;
-ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+ssl_protocols TLSv1.3 TLSv1.2 TLSv1.1 TLSv1;
 ssl_ciphers EECDH+AESGCM:EDH+AESGCM:EECDH:EDH:!MD5:!RC4:!LOW:!MEDIUM:!CAMELLIA:!ECDSA:!DES:!DSS:!3DES:!NULL;
 ssl_prefer_server_ciphers on;
 ssl_dhparam /etc/ssl/nginx/dhparam4096.pem;
