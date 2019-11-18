@@ -55,7 +55,7 @@ ssl_session_timeout 10m;
     if(err) console.log("Error writing ssl conf");
 });
 
-mkdirp("/etc/nginx"+domain,err => {
+mkdirp("/etc/ssl/nginx/"+domain,err => {
     if (err)console.log("Error creating ssl directory");
 });
 
