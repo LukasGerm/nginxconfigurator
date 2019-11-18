@@ -51,7 +51,8 @@ ssl_session_timeout 10m;
 `);
 
 mkdirp.sync("/etc/ssl/nginx/"+domain);
+if(pubKeyFile || privKeyFile){
+    fs.renameSync(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem")
 
-fs.renameSync(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem")
-
-fs.renameSync(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem")
+    fs.renameSync(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem")
+}
