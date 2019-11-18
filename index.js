@@ -60,11 +60,11 @@ mkdirp("/etc/nginx"+domain,err => {
 });
 
 fs.rename(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem",err => {
-    if(err) console.writeLine("Error writing public key");
+    if(err) console.log("Error writing public key");
 
 })
 
 fs.rename(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem",err => {
-    if(err) console.writeLine("Error writing private key");
+    if(err) console.log("Error writing private key");
 
 })
