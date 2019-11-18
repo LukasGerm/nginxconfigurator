@@ -16,7 +16,7 @@ server {
 
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name `+domain+`;                                                                                                                                                          sh/|media/|static/|robots.txt|humans.txt|favicon.ico) {
+    server_name `+domain+`;                                                            
     access_log off;
     expires 24h;
     }
