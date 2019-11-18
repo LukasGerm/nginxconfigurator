@@ -19,7 +19,6 @@ server {
     server_name `+domain+`;                                                            
     access_log off;
     expires 24h;
-    }
     location / {
 
             proxy_set_header X-Real-IP $remote_addr;
