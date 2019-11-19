@@ -28,7 +28,7 @@ process.argv.forEach((arg,index) => {
         --create-service | should a service be created?
         --image | docker image
         `)
-        
+        cancel = true;
     }
 });
 if(cancel) return;
