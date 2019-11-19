@@ -1,5 +1,5 @@
 const fs = require('fs');
-const execSync = require('child-process').execSync;
+const {execSync}= require('child-process');
 let domain = "";
 let port = "";
 let createService = false;
