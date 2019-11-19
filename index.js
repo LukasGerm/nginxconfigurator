@@ -1,5 +1,5 @@
 const fs = require('fs');
-const  {exec} = require('child-process');
+const  {execSync} = require('child-process');
 let domain = "";
 let port = "";
 let createService = false;
@@ -64,7 +64,7 @@ if(domain){
 }
 if(createService){
     let replacedDomain = domain.replace(".", "-");
-    exec("docker pull "+image);
+    execSync("docker pull "+image);
     fs.writeFileSync("/etc/systemd/system/"+replacedDomain+".service", `
     [Unit]
     Description=`+replacedDomain+` Service
@@ -82,9 +82,9 @@ if(createService){
 
     
     `);
-    exec("certbot --nginx -d "+replacedDomain+" --non-interactive --agree-tos -m lukas@lukasgermerott.de");
-    exec("systemctl enable "+replacedDomain+".service");
-    exec("systemctl start "+replacedDomain+".service");
+    execSync("certbot --nginx -d "+replacedDomain+" --non-interactive --agree-tos -m lukas@lukasgermerott.de");
+    execSync("systemctl enable "+replacedDomain+".service");
+    execSync("systemctl start "+replacedDomain+".service");
 }
     
 
