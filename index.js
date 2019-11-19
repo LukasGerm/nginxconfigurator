@@ -1,12 +1,9 @@
 const fs = require('fs');
-const path = require('path');
+const  {exec} = require('child-process');
 var mkdirp = require('mkdirp');
 let domain = "";
 let subdomain = false;
 let port = "";
-
-let pubKeyFile = "";
-let privKeyFile = "";
 
 
 process.argv.forEach((arg,index) => {
@@ -15,12 +12,6 @@ process.argv.forEach((arg,index) => {
 
     if(arg === "--subdomain")
         subdomain = true;
-
-    if(arg === "--key")
-        privKeyFile = process.argv[index+1];
-
-    if(arg === "--cert")
-        pubKeyFile = process.argv[index+1];
 
     if(arg === "--port")
         port = process.argv[index+1];
@@ -70,30 +61,8 @@ if(domain){
     }`);
 }
     
-if(!subdomain){
-    fs.writeFileSync("/etc/nginx/cloudflare."+domain+".ssl", `
-    ssl_certificate /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_public.pem;
-    ssl_certificate_key /etc/ssl/nginx/`+domain+`/`+domain+`_rsa_private.pem;
-    ssl_client_certificate /etc/ssl/nginx/origin-pull-ca.pem;
-    ssl_verify_client on;
-    ssl_protocols TLSv1.3 TLSv1.2 TLSv1.1 TLSv1;
-    ssl_ciphers EECDH+AESGCM:EDH+AESGCM:EECDH:EDH:!MD5:!RC4:!LOW:!MEDIUM:!CAMELLIA:!ECDSA:!DES:!DSS:!3DES:!NULL;
-    ssl_prefer_server_ciphers on;
-    ssl_dhparam /etc/ssl/nginx/dhparam4096.pem;
-    ssl_ecdh_curve secp384r1;
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
+exec("certbot --nginx -d "+domain+" --non-interactive --agree-tos -m lukas@lukasgermerott.de");
 
-    `);
-    
-    
-}
-if(pubKeyFile || privKeyFile)
-    mkdirp.sync("/etc/ssl/nginx/"+domain);
-if(pubKeyFile)
-    fs.renameSync(path.join(__dirname, pubKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_public.pem")
-if(privKeyFile)
-    fs.renameSync(path.join(__dirname, privKeyFile),"/etc/ssl/nginx/"+domain+"/"+domain+"_rsa_private.pem")
     
 
 
