@@ -85,7 +85,7 @@ if(createService){
 
     
     `);
-    execSync("certbot --nginx -d "+replacedDomain+" --non-interactive --agree-tos -m lukas@lukasgermerott.de");
+    execSync("certbot --nginx -d "+domain+" --non-interactive --agree-tos -m lukas@lukasgermerott.de");
     execSync("systemctl enable "+replacedDomain+".service");
     execSync("systemctl start "+replacedDomain+".service");
 }
