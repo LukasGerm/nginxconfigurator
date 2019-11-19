@@ -5,6 +5,7 @@ let port = "";
 let createService = false;
 let applicationPort = "";
 let image = "";
+let cancel = false;
 process.argv.forEach((arg,index) => {
     if(arg === "--domain")
         domain = process.argv[index+1];
@@ -27,8 +28,10 @@ process.argv.forEach((arg,index) => {
         --create-service | should a service be created?
         --image | docker image
         `)
+        
     }
 });
+if(cancel) return;
 if(createService && !image)
     return console.log("You cant create a service without a image");
 
