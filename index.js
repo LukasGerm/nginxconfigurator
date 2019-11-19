@@ -89,7 +89,7 @@ if(createService){
     execSync("systemctl enable "+replacedDomain+".service");
     execSync("systemctl start "+replacedDomain+".service");
 }
-    
+execSync("service nginx reload");    
 
 
     
