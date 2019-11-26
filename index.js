@@ -61,6 +61,16 @@ if(domain){
             proxy_cache_bypass $http_upgrade;
             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header   X-Forwarded-Proto $scheme;
+            proxy_redirect                  off;
+            proxy_buffers                   32 16k;
+            proxy_busy_buffers_size         64k;
+            proxy_cache                     off;
+
+
+            # Headers for client browser NOCACHE + CORS origin filter
+            add_header 'Cache-Control' 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+            expires off;
+
         }
 
     }`);
