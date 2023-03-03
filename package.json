@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/LukasGerm/nginxconfigurator#readme",
   "dependencies": {
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^0.5.6",
     "child_process":"1.0.2"
   }
 }
